@@ -31,6 +31,7 @@ const App = (props) => {
     axios.delete(`http://localhost:9000/api/movies/${id}`)
             .then(res=>{
                 setMovies(res.data)
+                setFavoriteMovies([favoriteMovies.filter(fm=>(id!== fm.id) )])
                 history.push("/movies");
 			})
 			.catch(err=>{
@@ -39,7 +40,17 @@ const App = (props) => {
   }
 
   const addToFavorites = (movie) => {
-    
+    let kontrol=true;
+    favoriteMovies.forEach(fm => {
+      if(fm["id"]==movie["id"]){
+        kontrol=false;
+      }
+    })
+    if(kontrol){
+      setFavoriteMovies(
+        [...favoriteMovies,movie]
+      )
+    }
   }
 
   return (
