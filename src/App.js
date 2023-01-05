@@ -31,7 +31,7 @@ const App = (props) => {
     axios.delete(`http://localhost:9000/api/movies/${id}`)
             .then(res=>{
                 setMovies(res.data)
-                setFavoriteMovies([favoriteMovies.filter(fm=>(id!== fm.id) )])
+                setFavoriteMovies(favoriteMovies.filter(fm=>(id!== fm.id) ))
                 history.push("/movies");
 			})
 			.catch(err=>{
