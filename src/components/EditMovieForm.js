@@ -9,7 +9,14 @@ const EditMovieForm = (props) => {
 	const id = (useParams()).id;
 	console.log(id);
 
-	const { setMovies } = props;
+	useEffect(()=>{
+		axios.get(`http://localhost:9000/api/movies/${id}`)
+		.then(res =>{
+			setMovie(res.data)
+		})
+	},[]);
+
+	const { setMovies,setFavoriteMovies,favoriteMovies } = props;
 	const [movie, setMovie] = useState({
 		title:"",
 		director: "",
@@ -30,6 +37,7 @@ const EditMovieForm = (props) => {
         axios.put(`http://localhost:9000/api/movies/${id}`, movie)
             .then(res=>{
                 setMovies(res.data);
+				
                 push(`/movies/${id}`);
 			})
 			.catch(err=>{
